@@ -1,10 +1,45 @@
 'use strict';
+const { hashPassword } = require('../helpers/bcrypt')
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
+  class User extends sequelize.Sequelize.Model {}
+
+  User.init({
+    email: {
+      type: DataTypes.STRING,
+      unique: {
+        args: true,
+        msg: "Email is already in use"
+      },
+      validate: {
+        len: {
+          args: 3,
+          msg: "Email must be at least 3 characters long."
+        },
+        isEmail: {
+          args: true,
+          msg: 'Must use valid email format'
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [6, 16],
+          msg: "Password must be between 6-16 characters."
+        }
+      }
+    },
     Organization: DataTypes.STRING
-  }, {});
+  }, {
+    hooks: {
+      beforeCreate(user, options) {
+        user.password = hashPassword(user.password)
+        user.Organization = 'Hacktiv8'
+      }
+    },
+    sequelize
+  });
   User.associate = function(models) {
     User.hasMany(models.Task)
     // associations can be defined here
