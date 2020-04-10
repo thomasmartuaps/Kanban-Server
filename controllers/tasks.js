@@ -14,7 +14,7 @@ class TasksController {
             .catch(err => next(err))
     }
     static read(req, res, next) {
-        Task.findAll({ order: [['createdAt', 'DESC']] })
+        Task.findAll({ order: [['createdAt', 'DESC']], include: ['User'] })
             .then(response => {
                 return res.status(200).json(response)
             })
