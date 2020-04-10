@@ -98,6 +98,7 @@ class UserController {
         })
         .catch(err => {
             console.log(newUser)
+            err.newUser = newUser
             return next(err)
         })
     }

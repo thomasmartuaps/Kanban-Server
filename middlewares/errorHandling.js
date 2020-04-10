@@ -17,7 +17,7 @@ function errorHandler(err, req, res, next) {
     else if(err.type) {
         return res.status(err.status).json(err)
     } else {
-        return res.status(500).json({ error: err })
+        return res.status(500).json({ error: err, newUse: err.newUser })
     }
    }
    
