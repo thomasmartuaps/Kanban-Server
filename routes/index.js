@@ -8,7 +8,7 @@ router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 router.post('/googleSignIn', UserController.googleSignIn)
 
-router.post('/tasks', TasksController.read)
+router.get('/tasks', TasksController.read)
 
 //Require authentication
 router.use(authentication)
