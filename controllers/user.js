@@ -96,7 +96,10 @@ class UserController {
                 avatar: `https://api.adorable.io/avatars/200/${response.email}.png` 
             })
         })
-        .catch(err => next(err))
+        .catch(err => {
+            console.log(newUser)
+            return next(err)
+        })
     }
 }
 module.exports = UserController
