@@ -4,6 +4,8 @@ if(process.env.NODE_ENV === 'development') {
 
 const express = require('express')
 const app = express()
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 const routes = require('./routes/index')
 const cors = require('cors')
 const errorHandler = require('./middlewares/errorHandling')
@@ -15,5 +17,8 @@ app.use(cors())
 app.use(routes)
 app.use(errorHandler)
 
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
 
-app.listen(process.env.PORT, _ => console.log(`Now Listening: I love you ${process.env.PORT}`))
+http.listen(process.env.PORT, () => console.log(`Now Listening: I love you ${process.env.PORT}`))
