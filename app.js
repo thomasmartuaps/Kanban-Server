@@ -22,9 +22,7 @@ io.on('connection', (socket) => {
     // Tell client to fetch data
     socket.on('userAction', () => {
         console.log('A user did something to the database')
-        io.emit('timeToFetch', () => {
-            console.log('Clients are told to fetch')
-        })
+        io.emit('timeToFetch')
     })
 });
 
