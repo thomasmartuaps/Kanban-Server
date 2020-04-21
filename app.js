@@ -19,6 +19,11 @@ app.use(errorHandler)
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+    // Tell client to fetch data
+    socket.on('userAction', () => {
+        console.log('A user did something to the database')
+        io.emit('timeToFetch')
+    })
 });
 
 http.listen(process.env.PORT, () => console.log(`Now Listening: I love you ${process.env.PORT}`))
